@@ -8,16 +8,14 @@ import styles from './calendar.module.css';
 import { useEffect, useState } from 'react';
 
 export default function Calendar() {
-    const [DynamicScheduler, setDynamicScheduler] = useState<any>(() => null); // Initialize with a function
+    const [DynamicScheduler, setDynamicScheduler] = useState<any>(() => null);
 
     useEffect(() => {
-        // Load the Smart.Scheduler component dynamically only in the browser
         import('smart-webcomponents-react/scheduler').then(module => {
-            setDynamicScheduler(() => module.Scheduler); // Use module.Scheduler to access the Scheduler component
+            setDynamicScheduler(() => module.Scheduler);
         });
     }, []);
 
-    // Return loading state if the component is not yet loaded
     if (!DynamicScheduler) return <div>Loading...</div>;
 
     const today = new Date(),
@@ -46,7 +44,7 @@ export default function Calendar() {
         ],
         currentTimeIndicator = true,
         shadeUntilCurrentTime = true,
-        view = 'day',
+        view = 'week',
         views = ['day', 'week', 'month', 'timelineDay', 'timelineWeek', 'timelineMonth'],
         firstDayOfWeek = 1;
 
@@ -59,8 +57,6 @@ export default function Calendar() {
             </Head>
 
             <main className={styles.main}>
-                <h1 className={styles.title}>Welcome to Next.js!</h1>
-
                 <DynamicScheduler
                     className={styles.scheduler}
                     id="scheduler"
@@ -70,6 +66,8 @@ export default function Calendar() {
                     view={view}
                     views={views}
                     firstDayOfWeek={firstDayOfWeek}
+                    hourStart={8}
+                    hourEnd={20}
                 />
             </main>
         </div>
